@@ -21,7 +21,7 @@ app.get('/scrape', function (req, res) {
 			json.raised = text.slice(0, ending);
 		}
 
-		res.send(json)
+		return res.send(json)
 
 	});
 })
