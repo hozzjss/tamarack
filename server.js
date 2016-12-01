@@ -31,17 +31,15 @@ app.get('/scrape', function (req, res) {
 		if (!error) {
 			var $ = cheerio.load(html);
 
-			var json = {
-				raised: ""
-			};
+			var raised
 
 			var text = $('.fundraiserProgress-current').text();
 			var ending = text.indexOf(" ");
-			json.raised = text.slice(0, ending);
+			raised = text.slice(0, ending);
 		}
 
 		//		return res.send(json)
-		res.end(JSON.stringify(json))
+		res.end(raised)
 	});
 })
 
