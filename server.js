@@ -1,37 +1,31 @@
-var express = require('express');
-var request = require('request');
-var cheerio = require('cheerio');
-var app = express();
-var port = process.env.PORT || 8080;
+const express = require('express')
+const request = require('request')
+const cheerio = require('cheerio')
+const url = require('url')
+const app = express()
+const port = process.env.PORT || 8080
 
 app.use(function (req, res, next) {
+	res.setHeader('Access-Control-Allow-Origin', '*')
+	res.setHeader('Access-Control-Allow-Methods', 'GET')
+	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+	res.setHeader('Access-Control-Allow-Credentials', true)
+	next()
+})
 
-	// Website you wish to allow to connect
-	res.setHeader('Access-Control-Allow-Origin', '*');
-
-	// Request methods you wish to allow
-	res.setHeader('Access-Control-Allow-Methods', 'GET');
-
-	// Request headers you wish to allow
-	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-	// Set to true if you need the website to include cookies in the requests sent
-	// to the API (e.g. in case you use sessions)
-	res.setHeader('Access-Control-Allow-Credentials', true);
-
-	// Pass to next layer of middleware
-	next();
-});
+app.get('/', function(req, res) {
+	res.send("Usage: /scrape")
+})
 
 app.get('/scrape', function (req, res) {
 
-	url = 'https://www.youcaring.com/jaredandsusielegg-700659';
+	let query = req.query.query
 
-	request(url, function (error, response, html) {
+	request(query, function (error, response, html) {
+		let raised = "Error!"
 		if (!error) {
-			var $ = cheerio.load(html);
-
-			var raised = $('.fundraiserProgress-current').text()
+			let $ = cheerio.load(html)
+			raised = $('.fundraiserProgress-current').text()
 		}
 		res.end(raised)
 	});
