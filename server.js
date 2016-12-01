@@ -25,24 +25,18 @@ app.use(function (req, res, next) {
 
 app.get('/scrape', function (req, res) {
 
-	url = 'https://www.youcaring.com/api-all-star-teams-649107';
+	url = 'https://www.youcaring.com/jaredandsusielegg-700659';
 
 	request(url, function (error, response, html) {
 		if (!error) {
 			var $ = cheerio.load(html);
 
-			var raised
-
-			var text = $('.fundraiserProgress-current').text();
-			var ending = text.indexOf(" ");
-			raised = text.slice(0, ending);
+			var raised = $('.fundraiserProgress-current').text()
+			raised = raised.slice(0, raised.indexOf(" "));
 		}
-
-		//		return res.send(json)
 		res.end(raised)
 	});
 })
 
 app.listen(port)
-	//console.log('Magic happens on port 8081');
 exports = module.exports = app;
