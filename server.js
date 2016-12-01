@@ -32,7 +32,6 @@ app.get('/scrape', function (req, res) {
 			var $ = cheerio.load(html);
 
 			var raised = $('.fundraiserProgress-current').text()
-			raised = raised.slice(0, raised.indexOf(" "));
 		}
 		res.end(raised)
 	});
