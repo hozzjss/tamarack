@@ -26,6 +26,8 @@ app.get('/scrape', function (req, res) {
 		if (!error) {
 			let $ = cheerio.load(html)
 			raised = $('.fundraiserProgress-current').text()
+			if (raised.indexOf("goal") !== -1)
+				raised = "$0"
 		}
 		res.end(raised)
 	});
