@@ -33,5 +33,16 @@ app.get('/scrape', function (req, res) {
 	});
 })
 
+app.get('/weather', function (req, res) {
+	let lon = req.query.lon;
+	let lat = req.query.lat;
+	let apiReq = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=560c314416cee6b04950e1f5415da8c5`;
+	request(apiReq, function (error, response, html) {
+		if(!error) {
+			console.log(html);
+			res.end(html);
+		}
+	});
+});
 app.listen(port)
 exports = module.exports = app;
