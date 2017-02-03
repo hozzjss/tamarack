@@ -14,7 +14,7 @@ app.use(function (req, res, next) {
 })
 
 app.get('/', function(req, res) {
-	res.send("Usage: /scrape")
+	res.send("Usage: /scrape or /weather")
 })
 
 app.get('/scrape', function (req, res) {
