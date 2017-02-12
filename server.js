@@ -47,11 +47,12 @@ app.get('/weather', function(req, res) {
 
 app.get('/search', function(req, res) {
   let searchQuery = req.query.query;
+	let key = req.query.key;
   let options = {
     url: 'https://api.cognitive.microsoft.com/bing/v5.0/news/search?q=' + searchQuery,
     method: 'GET',
     headers: {
-      'Ocp-Apim-Subscription-Key': '9c09fca80699418ebbca8bfb92adc629'
+      'Ocp-Apim-Subscription-Key': key
     }
   };
 	request(options, function (error, response, body) {
