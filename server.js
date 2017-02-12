@@ -62,6 +62,32 @@ app.get('/search', function(req, res) {
 		}
 	})
 })
+
+app.get('/sentiment', function (req, res) {
+	let query = req.query.query;
+	let key = req.query.key;
+	var options = {
+		url: 'https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment',
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'Ocp-Apim-Subscription-Key': key
+		},
+		body: JSON.stringify({
+			"documents": [{
+				"language": "en",
+				"id": "1",
+				"text": query
+			}]
+		}),
+	};
+	request(options, function (error, response, body) {
+		if (!error) {
+			console.log(body);
+			res.end(body);
+		}
+	})
+})
 app.listen(port)
 console.log("app running on port", port);
 exports = module.exports = app;
