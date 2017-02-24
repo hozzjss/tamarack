@@ -35,11 +35,12 @@ app.get('/scrape', function(req, res) {
 
 app.get('/date', function(req, res) {
     let query = req.query.query;
+    
     request(query, function(error, response, html){
         if (!error) {
             let $ = cheerio.load(html);
-	    let data = $('body').text().match(/\w+\s\d{1,2}\,\s\d{4}/g)[0];
-            res.end(data);
+	    let date = $('body').text().match(/\w+\s\d{1,2}\,\s\d{4}/g)[0];
+            res.end(date);
         } else {
             res.end(error);
         }
