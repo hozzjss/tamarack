@@ -38,7 +38,8 @@ app.get('/date', function(req, res) {
     request(query, function(error, response, html){
         if (!error) {
             let $ = cheerio.load(html);
-            res.end($('body').text().match(/\w+\s\d{1,2}\,\s\d{4}/g)[0]);
+	    let data = $('body').text().match(/\w+\s\d{1,2}\,\s\d{4}/g)[0];
+            res.end(data);
         } else {
             res.end(error);
         }
