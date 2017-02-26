@@ -35,16 +35,18 @@ app.get('/scrape', function(req, res) {
 
 app.get('/date', function(req, res) {
     let query = req.query.query;
-    
-    request(query, function(error, response, html){
-        if (!error) {
-            let $ = cheerio.load(html);
-	    let date = $('body').text().match(/\w+\s\d{1,2}\,\s\d{4}/g)[0];
-            res.end(date);
-        } else {
-            res.end(error);
-        }
-    });
+    if (query.indexOf("http") == -1) {
+        res.end("Please provide a link");
+    } else {
+        request(query, function(error, response, html){
+            if (!error) {
+                let $ = cheerio.load(html);
+                res.end($('body').text().match(/\w+\s\d{1,2}\,\s\d{4}/g)[0]);
+            } else {
+                res.end(error);
+            }
+        });
+    }
 });
 
 app.get('/weather', function(req, res) {
